@@ -5,7 +5,7 @@ EventHub is a Python-based web application designed to streamline event manageme
 
 ## Project Overview ✨
 A Flask-powered web app that allows:
-- 👨‍💼 *Admins* to create/manage events and winners
+- 👨‍💼 **Admins** to create/manage events and winners
 - 👩‍🎓 **Students** to view upcoming events and past winners
 - 📱 Responsive design with Instagram-like card layouts
 - 🔐 Authentication system with role-based access
@@ -51,12 +51,15 @@ EventHub/
    python app.py
 
 5. **Access in browser**
-   ```
    http://localhost:5000
-   ```
 
 ## Screenshots 📸
-*(Add your screenshots here after setup)*
+![image](https://github.com/user-attachments/assets/488dc94d-9ce5-489e-bd5a-9d29d5fe3c20)
+![image](https://github.com/user-attachments/assets/2fe368b2-88ca-47b8-ae24-e926f443d3cd)
+Login and Register Pages
+
+
+
 
 ## Folder Structure 📂
 EventHub/
@@ -78,7 +81,6 @@ EventHub/
 │   ├── events.html       # Events page
 │   └── winners.html      # Winners page
 └── README.md             # This documentation file
-```
 
 ## Demo Credentials 🔑
 - **Admin Account** 👨‍💼
@@ -99,5 +101,4 @@ EventHub/
 
 ## Author 👨‍💻
 **Sathvik**  
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-blue?style=flat&logo=github)](https://github.com/yourusername)  
 

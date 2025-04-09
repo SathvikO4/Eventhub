@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>EventHub</h1>
+            <nav>
+                <script>
+                    // Check if user is logged in (stored in sessionStorage)
+                    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                    if (currentUser) {
+                        document.write(`
+                            <a href="/events">Events</a>
+                            <a href="/winners">Winners</a>
+                            ${currentUser.role === 'admin' ? 
+                                '<a href="/admin">Admin Dashboard</a>' : 
+                                '<a href="/user">Dashboard</a>'}
+                            <a href="#" onclick="logout()">Logout</a>
+                        `);
+                    } else {
+                        document.write('<a href="/login">Login</a>');
+                    }
+                    
+                    function logout() {
+                        sessionStorage.removeItem('currentUser');
+                        window.location.href = '/login';
+                    }
+                </script>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 EventHub - Malla Reddy College</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

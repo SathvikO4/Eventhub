@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Winners{% endblock %}
+
+{% block content %}
+<h2>Past Winners</h2>
+<div class="grid-container">
+    {% for winner in winners %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/' + winner.image) }}" alt="{{ winner.winner }}">
+        <div class="card-content">
+            <h4>{{ winner.winner }}</h4>
+            <p>Event: {{ winner.event }}</p>
+            <p>Position: {{ winner.position }}</p>
+            <p>Department: {{ winner.department }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

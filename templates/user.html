@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ session['username'] }}</h2>
+<p>Browse upcoming events and past winners below.</p>
+
+<div class="dashboard-links">
+    <a href="{{ url_for('show_events') }}" class="btn">View All Events</a>
+    <a href="{{ url_for('show_winners') }}" class="btn">View All Winners</a>
+</div>
+
+<h3>Upcoming Events</h3>
+<div class="grid-container">
+    {% for event in events[:3] %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/' + event.image) }}" alt="{{ event.title }}">
+        <div class="card-content">
+            <h4>{{ event.title }}</h4>
+            <p>{{ event.description }}</p>
+            <small>Date: {{ event.date }}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<h3>Recent Winners</h3>
+<div class="grid-container">
+    {% for winner in winners[:3] %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/' + winner.image) }}" alt="{{ winner.winner }}">
+        <div class="card-content">
+            <h4>{{ winner.winner }}</h4>
+            <p>Event: {{ winner.event }}</p>
+            <p>Position: {{ winner.position }}</p>
+            <p>Department: {{ winner.department }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

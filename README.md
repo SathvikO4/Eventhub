@@ -18,15 +18,8 @@ A Flask-powered web app that allows:
 - 📱 Mobile-friendly responsive design
 
 ## App Structure 🏗️
-EventHub/
-├── app.py                # Flask application entry point
-├── static/
-│   ├── css/              # Stylesheets
-│   ├── js/               # JavaScript files
-│   └── images/           # Uploaded event/winners images
-├── templates/            # HTML templates
-├── README.md             # Project documentation
-└── requirements.txt      # Python dependencies
+![image](https://github.com/user-attachments/assets/383f05c2-5c0e-4a7c-97cf-fc0a06820903)
+
 
 ## Installation & Setup ⚙️
 
@@ -58,29 +51,21 @@ EventHub/
 ![image](https://github.com/user-attachments/assets/2fe368b2-88ca-47b8-ae24-e926f443d3cd)
 Login and Register Pages
 
+![image](https://github.com/user-attachments/assets/2f57c55b-2075-4b03-bf95-565791aabd49)
+![image](https://github.com/user-attachments/assets/b14b22ca-dc70-425c-988a-859e12ab1fda)
+User Page
+![image](https://github.com/user-attachments/assets/a6d1f202-ccaa-4645-9f72-d894642c2d5b)
+Winner Description
+![image](https://github.com/user-attachments/assets/1aa960be-455a-4e39-8072-5914df9decf8)
+Event Description
 
 
+![image](https://github.com/user-attachments/assets/0963737a-61a8-46a0-b8d1-e5610cf239c6)
+![image](https://github.com/user-attachments/assets/e61b677f-6145-4345-a622-865c7d5a3616)
+![image](https://github.com/user-attachments/assets/38156c15-e014-4a2f-9c05-936d853f192b)
+(Same goes with add winner also)
+Admin Page
 
-## Folder Structure 📂
-EventHub/
-├── app.py                # Main Flask application
-├── static/
-│   ├── css/
-│   │   └── style.css     # All CSS styles
-│   ├── js/
-│   │   ├── script.js     # Main JavaScript
-│   │   ├── login.js      # Login functionality
-│   │   └── register.js   # Registration functionality
-│   └── images/           # Stores uploaded images
-├── templates/
-│   ├── base.html         # Base template
-│   ├── login.html        # Login page
-│   ├── register.html     # Registration page
-│   ├── admin.html        # Admin dashboard
-│   ├── user.html         # User dashboard
-│   ├── events.html       # Events page
-│   └── winners.html      # Winners page
-└── README.md             # This documentation file
 
 ## Demo Credentials 🔑
 - **Admin Account** 👨‍💼

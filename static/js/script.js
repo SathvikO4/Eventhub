@@ -1,92 +1,126 @@
-// User management using localStorage
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize default users if not exists
-    if (!localStorage.getItem('users')) {
-        const defaultUsers = {
-            'admin': { password: 'admin123', role: 'admin' },
-            'user1': { password: 'user123', role: 'user' }
-        };
-        localStorage.setItem('users', JSON.stringify(defaultUsers));
+// Tab functionality
+function openTab(tabName) {
+    const tabContents = document.getElementsByClassName('tab-content');
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
     }
+    
+    const tabButtons = document.getElementsByClassName('tab-button');
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove('active');
+    }
+    
+    document.getElementById(tabName).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
 
-    // Login form handler
-    document.getElementById('loginForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        
-        const users = JSON.parse(localStorage.getItem('users'));
-        if (users[username] && users[username].password === password) {
-            // Store current user in sessionStorage
-            sessionStorage.setItem('currentUser', JSON.stringify({
-                username: username,
-                role: users[username].role
-            }));
-            window.location.href = '/';
-        } else {
-            alert('Invalid username or password');
-        }
+// Image preview functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Make event and winner cards clickable
+    // Event cards
+    const eventCards = document.querySelectorAll('.event-card');
+    eventCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const eventId = this.getAttribute('data-event-id');
+            if (eventId) {
+                window.location.href = `/event/${eventId}`;
+            }
+        });
     });
 
-    // Registration form handler
-    document.getElementById('registerForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('reg-username').value;
-        const password = document.getElementById('reg-password').value;
-        const role = document.getElementById('reg-role').value;
-        
-        const users = JSON.parse(localStorage.getItem('users') || {});
-        
-        if (users[username]) {
-            alert('Username already exists');
-            return;
-        }
-        
-        users[username] = { password: password, role: role };
-        localStorage.setItem('users', JSON.stringify(users));
-        alert('Registration successful! Please login.');
-        document.getElementById('reg-username').value = '';
-        document.getElementById('reg-password').value = '';
+    // Winner cards
+    const winnerCards = document.querySelectorAll('.winner-card');
+    winnerCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const winnerId = this.getAttribute('data-winner-id');
+            if (winnerId) {
+                window.location.href = `/winner/${winnerId}`;
+            }
+        });
     });
 
-    // Image preview functionality (from previous implementation)
-    const imageInput = document.getElementById('image');
-    if (imageInput) {
-        imageInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
+    // For event image preview
+    const eventImageInput = document.querySelector('#add_event_form input[type="file"]');
+    if (eventImageInput) {
+        eventImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
             if (file) {
-                let previewContainer = document.getElementById('image-preview-container');
-                if (!previewContainer) {
-                    previewContainer = document.createElement('div');
-                    previewContainer.id = 'image-preview-container';
-                    previewContainer.style.marginTop = '10px';
-                    imageInput.parentNode.appendChild(previewContainer);
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    let preview = document.getElementById('event-image-preview');
+                    if (!preview) {
+                        preview = document.createElement('img');
+                        preview.id = 'event-image-preview';
+                        preview.className = 'image-preview';
+                        eventImageInput.parentNode.insertBefore(preview, eventImageInput.nextSibling);
+                    }
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
                 }
-                
-                previewContainer.innerHTML = '';
-                const preview = document.createElement('img');
-                preview.src = URL.createObjectURL(file);
-                preview.style.maxWidth = '200px';
-                preview.style.maxHeight = '200px';
-                preview.style.borderRadius = '4px';
-                preview.style.marginTop = '10px';
-                previewContainer.appendChild(preview);
+                reader.readAsDataURL(file);
             }
         });
     }
+
+    // For winner image preview
+    const winnerImageInput = document.querySelector('#add_winner_form input[type="file"]');
+    if (winnerImageInput) {
+        winnerImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    let preview = document.getElementById('winner-image-preview');
+                    if (!preview) {
+                        preview = document.createElement('img');
+                        preview.id = 'winner-image-preview';
+                        preview.className = 'image-preview';
+                        winnerImageInput.parentNode.insertBefore(preview, winnerImageInput.nextSibling);
+                    }
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Form validation
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+            let isValid = true;
+            
+            fileInputs.forEach(input => {
+                if (input.files.length > 0) {
+                    const file = input.files[0];
+                    const extension = file.name.split('.').pop().toLowerCase();
+                    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                    
+                    if (!allowedExtensions.includes(extension)) {
+                        alert('Please upload only image files (jpg, jpeg, png, gif)');
+                        isValid = false;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                        alert('File size should be less than 5MB');
+                        isValid = false;
+                    }
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    });
 });
 
-// Toggle forms in admin dashboard
-function toggleForm(formId) {
-    const form = document.getElementById(formId);
-    if (form.style.display === 'none' || form.style.display === '') {
-        form.style.display = 'block';
-    } else {
-        form.style.display = 'none';
-    }
-}
-
-// Confirm before deleting
-function confirmDelete() {
-    return confirm('Are you sure you want to delete this?');
-}
+// Flash message auto-hide
+setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        alert.style.display = 'none';
+    });
+}, 5000);

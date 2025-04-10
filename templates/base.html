@@ -8,36 +8,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <nav>
         <div class="container">
-            <h1>EventHub</h1>
-            <nav>
-                <script>
-                    // Check if user is logged in (stored in sessionStorage)
-                    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-                    if (currentUser) {
-                        document.write(`
-                            <a href="/events">Events</a>
-                            <a href="/winners">Winners</a>
-                            ${currentUser.role === 'admin' ? 
-                                '<a href="/admin">Admin Dashboard</a>' : 
-                                '<a href="/user">Dashboard</a>'}
-                            <a href="#" onclick="logout()">Logout</a>
-                        `);
-                    } else {
-                        document.write('<a href="/login">Login</a>');
-                    }
-                    
-                    function logout() {
-                        sessionStorage.removeItem('currentUser');
-                        window.location.href = '/login';
-                    }
-                </script>
-            </nav>
+            <a href="{{ url_for('index') }}" class="logo">EventHub</a>
+            <div class="nav-links">
+                {% if 'username' in session %}
+                    {% if session['is_admin'] %}
+                        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+                    {% endif %}
+                    <span>Welcome, {{ session['username'] }}</span>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </div>
         </div>
-    </header>
-
-    <main class="container">
+    </nav>
+    
+    <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -47,14 +36,8 @@
         {% endwith %}
         
         {% block content %}{% endblock %}
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 EventHub - Malla Reddy College</p>
-        </div>
-    </footer>
-
+    </div>
+    
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

@@ -2,90 +2,38 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
-<h2>Admin Dashboard</h2>
-<div class="dashboard-actions">
-    <button onclick="toggleForm('event-form')" class="btn">Add New Event</button>
-    <button onclick="toggleForm('winner-form')" class="btn">Add New Winner</button>
+<h1>Admin Dashboard</h1>
+<div class="admin-actions">
+    <a href="{{ url_for('add_event') }}" class="btn">Add New Event</a>
+    <a href="{{ url_for('add_winner') }}" class="btn">Add New Winner</a>
 </div>
 
-<div id="event-form" class="form-container" style="display: none;">
-    <h3>Add New Event</h3>
-    <form method="POST" action="{{ url_for('add_event') }}" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Event Title</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Event Image</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
-            <small>Allowed formats: .png, .jpg, .jpeg, .gif</small>
-            <div id="image-preview-container"></div>
-        </div>
-        <button type="submit" class="btn">Add Event</button>
-    </form>
-</div>
-
-<div id="winner-form" class="form-container" style="display: none;">
-    <h3>Add New Winner</h3>
-    <form method="POST" action="{{ url_for('add_winner') }}">
-        <div class="form-group">
-            <label for="event">Event Name</label>
-            <input type="text" id="event" name="event" required>
-        </div>
-        <div class="form-group">
-            <label for="winner">Winner Name</label>
-            <input type="text" id="winner" name="winner" required>
-        </div>
-        <div class="form-group">
-            <label for="position">Position</label>
-            <select id="position" name="position" required>
-                <option value="1st">1st</option>
-                <option value="2nd">2nd</option>
-                <option value="3rd">3rd</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="department">Department</label>
-            <input type="text" id="department" name="department" required>
-        </div>
-        <button type="submit" class="btn">Add Winner</button>
-    </form>
-</div>
-
-<h3>Current Events</h3>
-<div class="grid-container">
+<h2>Manage Events</h2>
+<div class="event-list">
     {% for event in events %}
-    <div class="card">
+    <div class="admin-event-card">
         <img src="{{ url_for('static', filename='images/' + event.image) }}" alt="{{ event.title }}">
-        <div class="card-content">
-            <h4>{{ event.title }}</h4>
+        <div class="admin-event-info">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.date }}</p>
             <p>{{ event.description }}</p>
-            <small>Date: {{ event.date }}</small>
-            <a href="{{ url_for('delete_event', event_id=event.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+            <a href="{{ url_for('delete_event', event_id=event.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
         </div>
     </div>
     {% endfor %}
 </div>
 
-<h3>Current Winners</h3>
-<div class="grid-container">
+<h2>Manage Winners</h2>
+<div class="winner-list">
     {% for winner in winners %}
-    <div class="card">
+    <div class="admin-winner-card">
         <img src="{{ url_for('static', filename='images/' + winner.image) }}" alt="{{ winner.winner }}">
-        <div class="card-content">
-            <h4>{{ winner.winner }}</h4>
-            <p>Event: {{ winner.event }}</p>
-            <p>Position: {{ winner.position }}</p>
-            <p>Department: {{ winner.department }}</p>
-            <a href="{{ url_for('delete_winner', winner_id=winner.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+        <div class="admin-winner-info">
+            <h3>{{ winner.winner }}</h3>
+            <p><strong>Event:</strong> {{ winner.event }}</p>
+            <p><strong>Position:</strong> {{ winner.position }}</p>
+            <p><strong>Department:</strong> {{ winner.department }}</p>
+            <a href="{{ url_for('delete_winner', winner_id=winner.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this winner?')">Delete</a>
         </div>
     </div>
     {% endfor %}

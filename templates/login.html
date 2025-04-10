@@ -3,30 +3,24 @@
 
 {% block content %}
 <div class="auth-container">
-    <div class="login-container">
-        <h2>Welcome Back!</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <div class="auth-toggle">
-                New user? <a href="/register">Create account</a>
-            </div>
-        </form>
-    </div>
-
+    <h2>Login to EventHub</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+    
     <div class="demo-credentials">
-        <h3>Demo Credentials</h3>
-        <p><strong>Admin:</strong> username: admin, password: admin123</p>
-        <p><strong>User:</strong> username: user1, password: user123</p>
+        <h4>Demo Credentials:</h4>
+        <p><strong>Admin:</strong> admin / admin123</p>
+        <p><strong>User:</strong> user1 / user123</p>
     </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock %}

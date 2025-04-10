@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ winner.winner }} Details{% endblock %}
+
+{% block content %}
+<div class="details-container">
+    <div class="details-card">
+        <div class="details-image">
+            <img src="{{ url_for('static', filename='images/' + winner.image) }}" alt="{{ winner.winner }}">
+        </div>
+        <div class="details-content">
+            <h2>{{ winner.winner }}</h2>
+            <p class="winner-position">{{ winner.position }} Place</p>
+            <div class="winner-details">
+                <p><strong>Event:</strong> {{ winner.event }}</p>
+                <p><strong>Department:</strong> {{ winner.department }}</p>
+                <p><strong>Achievement:</strong> Won {{ winner.position }} place in {{ winner.event }}</p>
+            </div>
+            <a href="{{ url_for('index') }}" class="btn">Back to Winners</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

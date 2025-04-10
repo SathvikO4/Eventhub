@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} Details{% endblock %}
+
+{% block content %}
+<div class="details-container">
+    <div class="details-card">
+        <div class="details-image">
+            <img src="{{ url_for('static', filename='images/' + event.image) }}" alt="{{ event.title }}">
+        </div>
+        <div class="details-content">
+            <h2>{{ event.title }}</h2>
+            <p class="event-date">{{ event.date }}</p>
+            <div class="event-description">
+                <p>{{ event.description }}</p>
+            </div>
+            <a href="{{ url_for('index') }}" class="btn">Back to Events</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
